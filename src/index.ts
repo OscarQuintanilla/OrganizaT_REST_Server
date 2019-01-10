@@ -4,6 +4,7 @@ import cors from 'cors';
 
 import indexRoutes from './routes/indexRoutes';
 import gamesRoutes from './routes/gamesRoutes';
+import tareasRoutes from './routes/tareasRoutes';
 
 
 console.log('Server Starts...');
@@ -32,6 +33,7 @@ class Server {
     routes(): void{ 
         this.app.use("/", indexRoutes);
         this.app.use("/api/games", gamesRoutes);
+        this.app.use("/tareas", tareasRoutes);
     }
     //Inicializa el servidor
     start(): void{         
