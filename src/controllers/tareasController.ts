@@ -5,7 +5,7 @@ import { request } from "https";
 class TareasController {
     public async listarTareas(req: Request, res: Response): Promise<void> {
         try {
-            const result = await pool.query("SELECT * FROM tareas INNER JOIN usuario_tareas ON tareas.id = usuario_tareas.idTarea");
+            const result = await pool.query("SELECT * FROM tareas WHERE idUsuario = 'MASTER' ORDER BY FechaEntrega ASC");
             res.json(result);
         } catch (error) {
             console.log(error);
