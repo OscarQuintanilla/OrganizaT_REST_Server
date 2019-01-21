@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import gamesController from '../controllers/tareasController';
 import tareasController from '../controllers/tareasController';
 
 class TareasRoutes {

@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
 const gamesRoutes_1 = __importDefault(require("./routes/gamesRoutes"));
 const tareasRoutes_1 = __importDefault(require("./routes/tareasRoutes"));
+const generalRoutes_1 = __importDefault(require("./routes/generalRoutes"));
 console.log('Server Starts...');
 class Server {
     constructor() {
@@ -31,6 +32,7 @@ class Server {
         this.app.use("/", indexRoutes_1.default);
         this.app.use("/api/games", gamesRoutes_1.default);
         this.app.use("/tareas", tareasRoutes_1.default);
+        this.app.use("/general", generalRoutes_1.default);
     }
     //Inicializa el servidor
     start() {
