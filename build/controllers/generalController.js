@@ -13,9 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database"));
 class GeneralController {
-    /**
-     *
-     */
     generarId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { tipo } = req.params;
@@ -42,14 +39,8 @@ class GeneralController {
                         res.json(result);
                         break;
                     case "tarea":
-                        result = yield database_1.default.query("SELECT id FROM tareas ORDER BY id ASC");
-                        result.forEach(tarea => {
-                            partesId = tarea.id.split(/['TA' '0']/);
-                            let cantPartes = partesId.length;
-                            ultimoId = partesId[cantPartes - 1];
-                        });
-                        console.log(ultimoId);
-                        res.json(result[2]);
+                        let tipo = "TA";
+                        res.json({ "id": this.asignarCeros(tipo, idAsignado) });
                         break;
                     default:
                         break;
@@ -60,7 +51,43 @@ class GeneralController {
             }
         });
     }
-    asignarCeros() {
+    /**
+     *
+     * @param tipoElemento String con las iniciales de ID asignadas al Elemento (Tarea, Evaluación, etc.).
+     * @param ultimoId Número asignado para colocarse al final del correlativo para ID.
+     */
+    asignarCeros(tipoElemento, ultimoId) {
+        let id = "";
+        if (ultimoId < 10) {
+            id = tipoElemento + "0000000" + ultimoId.toString();
+            console.log(tipoElemento);
+        }
+        else if (ultimoId > 9 && ultimoId < 100) {
+            id = tipoElemento + "000000" + ultimoId.toString();
+            console.log(tipoElemento);
+        }
+        return id;
+    }
+    asignarNumCorrelativo(elemento, req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let iteracion = 0;
+            let ultimoId = 0;
+            let idAsignado = 0;
+            var result;
+            var partesId;
+            result = yield database_1.default.query(`SELECT id FROM ${elemento} ORDER BY id ASC`);
+            //Tambien encuentra saltos en la continuidad de tareas
+            result.forEach(tipoElemento => {
+                iteracion++;
+                partesId = tipoElemento.id.split(/[A]/);
+                let cantPartes = partesId.length;
+                if (partesId[cantPartes - 1] == iteracion) {
+                    ultimoId = partesId[cantPartes - 1];
+                }
+            });
+            idAsignado = +ultimoId + 1;
+            return idAsignado;
+        });
     }
 }
 const generalController = new GeneralController();
