@@ -25,7 +25,9 @@ class TareasController {
     public async crearTarea(req: Request, res: Response) {
         try {
             //Crea el registro en la tabla tareas
-            await pool.query('INSERT INTO tareas SET ?', [req.body])
+            console.log(req.body);
+            await pool.query('INSERT INTO tareas SET ?', [req.body]);
+            
             //Crea el registro en la tabla usuario_tareas
             const { id } = req.body;
             try {
@@ -50,7 +52,7 @@ class TareasController {
             await pool.query("UPDATE tareas SET ? WHERE id = ?", [req.body, id]);
             res.json({ message: "Tarea actualizada." });
         } catch (error) {
-            console.log("No se pudo insertar la tarea.");
+            console.log("No se pudo actualizar la tarea. Mensaje: " + error);
         }
         res.json({ text: 'Modificando ' + req.params.id });
     }

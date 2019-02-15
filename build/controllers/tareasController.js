@@ -40,6 +40,7 @@ class TareasController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //Crea el registro en la tabla tareas
+                console.log(req.body);
                 yield database_1.default.query('INSERT INTO tareas SET ?', [req.body]);
                 //Crea el registro en la tabla usuario_tareas
                 const { id } = req.body;
@@ -68,7 +69,7 @@ class TareasController {
                 res.json({ message: "Tarea actualizada." });
             }
             catch (error) {
-                console.log("No se pudo insertar la tarea.");
+                console.log("No se pudo actualizar la tarea. Mensaje: " + error);
             }
             res.json({ text: 'Modificando ' + req.params.id });
         });

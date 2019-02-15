@@ -4,92 +4,98 @@ import pool from '../database';
 class GeneralController {
     public async generarId(req: Request, res: Response) {
         const { tipo } = req.params;
+        var inicialesTipo: string = "";
         var result: string[];
-        var partesId;
-        var ultimoId: number;
+        var partesId: string[];
+        let elemento: string = "";
+        let ultimoId: string = "";
+        let id: string = "";
+        let iteracion: number = 0;
+
+
         try {
             switch (tipo) {
                 case "evaluacion":
-                    result = await pool.query("SELECT id FROM tareas ORDER BY id ASC");
-                    //lista = result[1]
-                    res.json(result[2]);
+                    elemento = "evaluaciones";
+                    inicialesTipo = "EV";
+
                     break;
                 case "grupo":
-                    result = await pool.query("SELECT id FROM tareas ORDER BY id ASC");
-                    res.json(result);
+                    elemento = "gruposdetrabajo";
+                    inicialesTipo = "GR";
+
                     break;
                 case "materia":
-                    result = await pool.query("SELECT id FROM tareas ORDER BY id ASC");
-                    res.json(result);
+                    elemento = "materias";
+                    inicialesTipo = "TA";
+
                     break;
                 case "pefil":
-                    result = await pool.query("SELECT id FROM tareas ORDER BY id ASC");
-                    res.json(result);
+                    elemento = "usuario";
+                    inicialesTipo = "TA";
+
                     break;
                 case "tarea":
-                    let tipo: string = "TA";
+                    elemento = "tareas";
+                    inicialesTipo = "TA";
 
-                    
-
-
-
-
-                    res.json({ "id": this.asignarCeros(tipo, idAsignado) });
                     break;
-
                 default:
-
+                    console.log("Vulneración del sistema.");
                     break;
             }
 
+            result = await pool.query(`SELECT id FROM ${elemento} ORDER BY id ASC`);
+
+            //Tambien encuentra saltos en la continuidad de tareas
+            result.forEach(registro => {
+                iteracion++;
+                //console.log(registro);
+                partesId = registro.id.split(/[A]/);
+                let cantPartes = partesId.length;
+                if (+partesId[cantPartes - 1] == iteracion) {
+                    ultimoId = partesId[cantPartes - 1];
+                }
+                /*
+                console.log(" c " + cantPartes);
+                console.log(" i " + iteracion);
+                */console.log(" u " + +ultimoId);/*
+                console.log(" - ");
+                */
+
+            });
+            //Asigna el correlativo adicionando uno al último
+            ultimoId = (+ultimoId + 1).toString();
+
+            //Asignación de ceros
+            if (+ultimoId < 10) {
+                id = inicialesTipo + "0000000" + ultimoId.toString();
+            } else if (+ultimoId > 9 && +ultimoId < 100) {
+                id = inicialesTipo + "000000" + ultimoId.toString();
+            } else if (+ultimoId > 99 && +ultimoId > 1000) {
+                id = inicialesTipo + "00000" + ultimoId.toString();
+            } else if (+ultimoId > 999 && +ultimoId > 10000) {
+                id = inicialesTipo + "0000" + ultimoId.toString();
+            } else if (+ultimoId > 9999 && +ultimoId > 100000) {
+                id = inicialesTipo + "000" + ultimoId.toString();
+            } else if (+ultimoId > 99999 && +ultimoId > 1000000) {
+                id = inicialesTipo + "00" + ultimoId.toString();
+            } else if (+ultimoId > 999999 && +ultimoId > 10000000) {
+                id = inicialesTipo + "0" + ultimoId.toString();
+            } else if (+ultimoId > 9999999 && +ultimoId > 100000000) {
+                id = inicialesTipo + "" + ultimoId.toString();
+            } else {
+                id = "ERROR AL GENERAR CEROS. REVISAR FUNCIÓN.";
+            }
+            console.log(id);
+            //Respuesta con procedimiento correcto
+            res.json({ "id": id });
 
         } catch (error) {
             console.log(error);
         }
-
     }
-    /**
-     * 
-     * @param tipoElemento String con las iniciales de ID asignadas al Elemento (Tarea, Evaluación, etc.).
-     * @param ultimoId Número asignado para colocarse al final del correlativo para ID.
-     */
-
-    private asignarCeros(tipoElemento: string, ultimoId: number): string {
-        let id: string = "";
-
-        if (ultimoId < 10) {
-            id = tipoElemento + "0000000" + ultimoId.toString();
-            console.log(tipoElemento);
-        } else if (ultimoId > 9 && ultimoId < 100) {
-            id = tipoElemento + "000000" + ultimoId.toString();
-            console.log(tipoElemento);
-        }
-        return id;
-    }
-
-    private async asignarNumCorrelativo(elemento: string, req: Request, res: Response): Promise<number> {
-        let iteracion: number = 0;
-        let ultimoId: number = 0;
-        let idAsignado: number = 0;
-        var result: string[];
-        var partesId;
-
-        result = await pool.query(`SELECT id FROM ${elemento} ORDER BY id ASC`);
-
-        //Tambien encuentra saltos en la continuidad de tareas
-        result.forEach(tipoElemento => {
-            iteracion++;
-            partesId = tipoElemento.id.split(/[A]/);
-            let cantPartes = partesId.length
-            if (partesId[cantPartes - 1] == iteracion) {
-                ultimoId = partesId[cantPartes - 1];
-            }
-        });
-        idAsignado = +ultimoId + 1;
-
-        return idAsignado;
-    }
-
 }
+
 const generalController = new GeneralController();
 export default generalController;
