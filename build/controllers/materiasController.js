@@ -48,7 +48,7 @@ class MateriasController {
                 res.json({ "Éxito": "Materia registrada con éxito" });
             }
             catch (error) {
-                res.json({ "Error": "Error al registrar materia: " + error + "\n" + " Body: " + req.body });
+                res.json({ "Error": "Error al registrar materia: " + error });
             }
         });
     }
@@ -60,7 +60,7 @@ class MateriasController {
                 res.json({ "Éxito": "Materia modificada exitosamente." });
             }
             catch (error) {
-                res.json({ "Error": "Error al registrar materia: " + error + "\n" + " Body: " + req.body });
+                res.json({ "Error": "Error al modificar materia: " + error });
             }
         });
     }
@@ -72,7 +72,7 @@ class MateriasController {
                 res.json({ "Éxito": "Materia eliminada exitosamente." });
             }
             catch (error) {
-                res.json({ "Error": "Error al registrar materia: " + error });
+                res.json({ "Error": "Error al eliminar materia: " + error });
             }
         });
     }

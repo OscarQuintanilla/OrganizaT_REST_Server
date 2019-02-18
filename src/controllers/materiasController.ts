@@ -33,7 +33,7 @@ class MateriasController {
             await pool.query('INSERT INTO materias SET ?', [req.body]);
             res.json({ "Éxito": "Materia registrada con éxito" });
         } catch (error) {
-            res.json({ "Error": "Error al registrar materia: " + error + "\n" + " Body: " + req.body });
+            res.json({ "Error": "Error al registrar materia: " + error });
         }
     }
 
@@ -43,7 +43,7 @@ class MateriasController {
             await pool.query('UPDATE materias SET ? WHERE id = ?', [req.body, id]);
             res.json({ "Éxito": "Materia modificada exitosamente." });
         } catch (error) {
-            res.json({ "Error": "Error al registrar materia: " + error + "\n" + " Body: " + req.body });
+            res.json({ "Error": "Error al modificar materia: " + error });
         }
     }
 
@@ -53,7 +53,7 @@ class MateriasController {
             await pool.query('DELETE FROM materias WHERE id = ?', [id]);
             res.json({ "Éxito": "Materia eliminada exitosamente." });
         } catch (error) {
-            res.json({ "Error": "Error al registrar materia: " + error });
+            res.json({ "Error": "Error al eliminar materia: " + error });
         }
     }
 
