@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
-const gamesRoutes_1 = __importDefault(require("./routes/gamesRoutes"));
 const tareasRoutes_1 = __importDefault(require("./routes/tareasRoutes"));
 const generalRoutes_1 = __importDefault(require("./routes/generalRoutes"));
 const materiasRoutes_1 = __importDefault(require("./routes/materiasRoutes"));
+const evaluacionesRoutes_1 = __importDefault(require("./routes/evaluacionesRoutes"));
 console.log('Server Starts...');
 class Server {
     constructor() {
@@ -29,10 +29,10 @@ class Server {
     }
     //Rutas del servidor
     routes() {
-        this.app.use("/api/games", gamesRoutes_1.default);
         this.app.use("/tareas", tareasRoutes_1.default);
         this.app.use("/general", generalRoutes_1.default);
         this.app.use("/materias", materiasRoutes_1.default);
+        this.app.use("/evaluaciones", evaluacionesRoutes_1.default);
     }
     //Inicializa el servidor
     start() {

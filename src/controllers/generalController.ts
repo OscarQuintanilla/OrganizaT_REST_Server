@@ -5,13 +5,12 @@ class GeneralController {
     public async generarId(req: Request, res: Response) {
         const { tipo } = req.params;
         var inicialesTipo: string = "";
-        var result: string[];
+        var result: [{ id: "" }];
         var partesId: string[];
         let elemento: string = "";
         let ultimoId: string = "";
         let id: string = "";
         let iteracion: number = 0;
-
 
         try {
             switch (tipo) {
@@ -27,12 +26,12 @@ class GeneralController {
                     break;
                 case "materia":
                     elemento = "materias";
-                    inicialesTipo = "TA";
+                    inicialesTipo = "MA";
 
                     break;
-                case "pefil":
+                case "perfil":
                     elemento = "usuario";
-                    inicialesTipo = "TA";
+                    inicialesTipo = "US";
 
                     break;
                 case "tarea":
@@ -50,20 +49,13 @@ class GeneralController {
             //Tambien encuentra saltos en la continuidad de tareas
             result.forEach(registro => {
                 iteracion++;
-                //console.log(registro);
-                partesId = registro.id.split(/[A]/);
+                partesId = registro.id.split(/[A V R S]/);
                 let cantPartes = partesId.length;
                 if (+partesId[cantPartes - 1] == iteracion) {
                     ultimoId = partesId[cantPartes - 1];
                 }
-                /*
-                console.log(" c " + cantPartes);
-                console.log(" i " + iteracion);
-                */console.log(" u " + +ultimoId);/*
-                console.log(" - ");
-                */
-
             });
+
             //Asigna el correlativo adicionando uno al último
             ultimoId = (+ultimoId + 1).toString();
 

@@ -2,11 +2,10 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
-import gamesRoutes from './routes/gamesRoutes';
 import tareasRoutes from './routes/tareasRoutes';
 import generalRoutes  from "./routes/generalRoutes";
-import materiasController from './controllers/materiasController';
 import materiasRoutes from './routes/materiasRoutes';
+import evaluacionesRoutes from './routes/evaluacionesRoutes';
 
 
 console.log('Server Starts...');
@@ -33,10 +32,10 @@ class Server {
     }
     //Rutas del servidor
     routes(): void{ 
-        this.app.use("/api/games", gamesRoutes);
         this.app.use("/tareas", tareasRoutes);
         this.app.use("/general", generalRoutes);
         this.app.use("/materias", materiasRoutes);
+        this.app.use("/evaluaciones", evaluacionesRoutes);
     }
     //Inicializa el servidor
     start(): void{         

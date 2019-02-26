@@ -13,7 +13,7 @@ class MateriasController {
         }
     }
 
-    public async buscarMateriaPorID(req: Request, res: Response) {
+    public async buscarMateriaPorId(req: Request, res: Response) {
         try {
             const { id } = req.params;
             const resultado = await pool.query('SELECT * FROM materias WHERE id = ?', [id]);
