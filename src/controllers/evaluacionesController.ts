@@ -39,10 +39,10 @@ export class EvaluacionesController {
         try {
             const { id } = req.params;
             const resultado = await pool.query("UPDATE evaluaciones SET ? WHERE id = ?", [req.body, id]);
-            res.json({"resultado": "exito"});
+            res.json({"resultado": req.params});
+            console.log(req.params);
         } catch (error) {
             res.json({ "error": error });
-            console.log("Error al listar: " + error);
         }
     }
 
