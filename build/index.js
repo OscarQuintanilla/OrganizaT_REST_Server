@@ -10,6 +10,7 @@ const tareasRoutes_1 = __importDefault(require("./routes/tareasRoutes"));
 const generalRoutes_1 = __importDefault(require("./routes/generalRoutes"));
 const materiasRoutes_1 = __importDefault(require("./routes/materiasRoutes"));
 const evaluacionesRoutes_1 = __importDefault(require("./routes/evaluacionesRoutes"));
+const gruposRoutes_1 = __importDefault(require("./routes/gruposRoutes"));
 console.log('Server Starts...');
 class Server {
     constructor() {
@@ -33,6 +34,7 @@ class Server {
         this.app.use("/general", generalRoutes_1.default);
         this.app.use("/materias", materiasRoutes_1.default);
         this.app.use("/evaluaciones", evaluacionesRoutes_1.default);
+        this.app.use("/grupos", gruposRoutes_1.default);
     }
     //Inicializa el servidor
     start() {
