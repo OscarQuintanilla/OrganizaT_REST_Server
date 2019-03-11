@@ -14,7 +14,7 @@ class TareasRoutes {
         this.router.post('/', tareasController.crearTarea );
         this.router.put('/:id', tareasController.modificarTarea);
         this.router.delete('/:id', tareasController.eliminarTarea);
-
+        
     }
 
 }

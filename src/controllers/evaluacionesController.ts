@@ -6,7 +6,7 @@ export class EvaluacionesController {
 
     public async listarEvaluaciones(req: Request, res: Response) {
         try {
-            const resultado = await pool.query("SELECT * FROM evaluaciones WHERE idUsuario = 'MASTER'");
+            const resultado = await pool.query("SELECT * FROM evaluaciones WHERE idUsuario = 'MASTER' ORDER BY Fecha");
             res.json(resultado);
         } catch (error) {
             res.json({ "error": error });

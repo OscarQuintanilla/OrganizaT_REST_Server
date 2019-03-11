@@ -31,7 +31,7 @@ class GeneralController {
                         break;
                     case "grupo":
                         elemento = "gruposdetrabajo";
-                        inicialesTipo = "GT";
+                        inicialesTipo = "GR";
                         break;
                     case "materia":
                         elemento = "materias";

@@ -7,6 +7,7 @@ import generalRoutes  from "./routes/generalRoutes";
 import materiasRoutes from './routes/materiasRoutes';
 import evaluacionesRoutes from './routes/evaluacionesRoutes';
 import gruposRoutes from "./routes/gruposRoutes";
+import inicioRoutes from "./routes/inicioRoutes";
 
 
 console.log('Server Starts...');
@@ -38,6 +39,7 @@ class Server {
         this.app.use("/materias", materiasRoutes);
         this.app.use("/evaluaciones", evaluacionesRoutes);
         this.app.use("/grupos", gruposRoutes);
+        this.app.use("/inicio", inicioRoutes);
     }
     //Inicializa el servidor
     start(): void{         

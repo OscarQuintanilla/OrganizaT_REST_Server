@@ -22,6 +22,15 @@ class TareasController {
         }
     }
 
+    public async listarTareasSemana(req: Request, res: Response){
+        try {
+            const resultado = await pool.query("SELECT * FROM tareas WHERE idUsuario = 'MASTER' AND DATEDIFF(FechaEntrega, CURDATE()) < 8");
+            res.json(resultado);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     public async crearTarea(req: Request, res: Response) {
         try {
             //Crea el registro en la tabla tareas

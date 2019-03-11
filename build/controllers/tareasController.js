@@ -36,6 +36,17 @@ class TareasController {
             }
         });
     }
+    listarTareasSemana(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const resultado = yield database_1.default.query("SELECT * FROM tareas WHERE idUsuario = 'MASTER' AND DATEDIFF(FechaEntrega, CURDATE()) < 8");
+                res.json(resultado);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+    }
     crearTarea(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -16,7 +16,7 @@ class EvaluacionesController {
     listarEvaluaciones(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const resultado = yield database_1.default.query("SELECT * FROM evaluaciones WHERE idUsuario = 'MASTER'");
+                const resultado = yield database_1.default.query("SELECT * FROM evaluaciones WHERE idUsuario = 'MASTER' ORDER BY Fecha");
                 res.json(resultado);
             }
             catch (error) {
