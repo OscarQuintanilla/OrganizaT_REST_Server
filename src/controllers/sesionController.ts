@@ -8,8 +8,6 @@ class SesionController {
         const { NombreLogin } = req.body;
         const { Clave } = req.body;
 
-        console.log(req.body);
-
         const respuesta = await pool.query(
             "SELECT * FROM usuario WHERE (Correo = ? AND Clave = ? ) OR (NombreLogin = ? AND Clave = ?) ",
             [Correo, Clave, NombreLogin, Clave]
