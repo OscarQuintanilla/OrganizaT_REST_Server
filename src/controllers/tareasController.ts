@@ -4,8 +4,9 @@ import { request } from "https";
 
 class TareasController {
     public async listarTareas(req: Request, res: Response): Promise<void> {
+        const { idUsuario } = req.body;
         try {
-            const result = await pool.query("SELECT * FROM tareas WHERE idUsuario = 'MASTER' ORDER BY FechaEntrega ASC");
+            const result = await pool.query("SELECT * FROM tareas WHERE idUsuario = ? ORDER BY FechaEntrega ASC", [idUsuario]);
             res.json(result);
         } catch (error) {
             console.log(error);
@@ -15,14 +16,15 @@ class TareasController {
     public async buscarTarea(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            const result = await pool.query("SELECT * FROM tareas WHERE id = ?", [id]);
+            const { idUsuario } = req.body;
+            const result = await pool.query("SELECT * FROM tareas WHERE id = ? AND idUsuario = ?", [id, idUsuario]);
             res.json(result);
         } catch (error) {
             console.log("Ocurrió un error en la consulta.");
         }
     }
 
-    public async listarTareasSemana(req: Request, res: Response){
+    public async listarTareasSemana(req: Request, res: Response) {
         try {
             const resultado = await pool.query("SELECT * FROM tareas WHERE idUsuario = 'MASTER' AND DATEDIFF(FechaEntrega, CURDATE()) < 8");
             res.json(resultado);
@@ -36,7 +38,7 @@ class TareasController {
             //Crea el registro en la tabla tareas
             console.log(req.body);
             await pool.query('INSERT INTO tareas SET ?', [req.body]);
-            
+
             //Crea el registro en la tabla usuario_tareas
             const { id } = req.body;
             try {
@@ -68,8 +70,10 @@ class TareasController {
 
     public async eliminarTarea(req: Request, res: Response): Promise<void> {
         const { id } = req.params;
-        await pool.query('DELETE FROM tareas WHERE id = ?', [id]);
-        res.json({ message: "Juego Eliminado. " + id });
+        const { idUsuario } = req.body;
+        console.log(idUsuario);
+        await pool.query('DELETE FROM tareas WHERE id = ? AND idUsuario = ?', [id, idUsuario]);
+        res.json({ message: "Tarea eliminada. " + id });
     }
 
 }

@@ -15,8 +15,9 @@ const database_1 = __importDefault(require("../database"));
 class TareasController {
     listarTareas(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            const { idUsuario } = req.body;
             try {
-                const result = yield database_1.default.query("SELECT * FROM tareas WHERE idUsuario = 'MASTER' ORDER BY FechaEntrega ASC");
+                const result = yield database_1.default.query("SELECT * FROM tareas WHERE idUsuario = ? ORDER BY FechaEntrega ASC", [idUsuario]);
                 res.json(result);
             }
             catch (error) {
@@ -28,7 +29,8 @@ class TareasController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const result = yield database_1.default.query("SELECT * FROM tareas WHERE id = ?", [id]);
+                const { idUsuario } = req.body;
+                const result = yield database_1.default.query("SELECT * FROM tareas WHERE id = ? AND idUsuario = ?", [id, idUsuario]);
                 res.json(result);
             }
             catch (error) {
@@ -88,8 +90,10 @@ class TareasController {
     eliminarTarea(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            yield database_1.default.query('DELETE FROM tareas WHERE id = ?', [id]);
-            res.json({ message: "Juego Eliminado. " + id });
+            const { idUsuario } = req.body;
+            console.log(idUsuario);
+            yield database_1.default.query('DELETE FROM tareas WHERE id = ? AND idUsuario = ?', [id, idUsuario]);
+            res.json({ message: "Tarea eliminada. " + id });
         });
     }
 }

@@ -11,11 +11,11 @@ class MateriasRoutes {
         this.config();
     }
     config() {
-        this.router.get('/', materiasController_1.default.listarMaterias);
-        this.router.get('/:id', materiasController_1.default.buscarMateriaPorId);
+        this.router.post('/lista', materiasController_1.default.listarMaterias);
+        this.router.post('/:id', materiasController_1.default.buscarMateriaPorId);
         this.router.post('/', materiasController_1.default.crearMateria);
         this.router.put('/:id', materiasController_1.default.modificarMateria);
-        this.router.delete('/:id', materiasController_1.default.eliminarMateria);
+        this.router.post('/fin/:id', materiasController_1.default.eliminarMateria);
     }
 }
 const materiasRoutes = new MateriasRoutes();

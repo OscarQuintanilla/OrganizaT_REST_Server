@@ -9,11 +9,11 @@ class MateriasRoutes{
     }
 
     config():void{
-        this.router.get('/', materiasController.listarMaterias);
-        this.router.get('/:id', materiasController.buscarMateriaPorId);
+        this.router.post('/lista', materiasController.listarMaterias);
+        this.router.post('/:id', materiasController.buscarMateriaPorId);
         this.router.post('/', materiasController.crearMateria);
         this.router.put('/:id', materiasController.modificarMateria);
-        this.router.delete('/:id', materiasController.eliminarMateria);
+        this.router.post('/fin/:id', materiasController.eliminarMateria);
     }
 }
 

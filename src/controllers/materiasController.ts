@@ -6,7 +6,8 @@ class MateriasController {
 
     public async listarMaterias(req: Request, res: Response): Promise<void> {
         try {
-            const resultado = await pool.query("SELECT * FROM materias WHERE idUsuario = 'MASTER'");
+            const { idUsuario } = req.body;
+            const resultado = await pool.query("SELECT * FROM materias WHERE idUsuario = ?", [idUsuario]);
             res.json(resultado);
         } catch (error) {
             console.log("Consulta de listar no exitosa: " + error);
@@ -15,10 +16,14 @@ class MateriasController {
 
     public async buscarMateriaPorId(req: Request, res: Response) {
         try {
+            console.log(req.body);
+            const { idUsuario } = req.body[0];
             const { id } = req.params;
-            const resultado = await pool.query('SELECT * FROM materias WHERE id = ?', [id]);
-            if (resultado[0].idUsuario != 'MASTER') {
-                res.json({ "error": resultado });
+
+            const resultado = await pool.query('SELECT * FROM materias WHERE id = ? AND idUsuario = ?', [id, idUsuario]);
+            if (resultado[0].idUsuario != idUsuario) {
+                resultado == null;
+                res.json({ "error": "sin permiso" });
             } else {
                 res.json(resultado);
             }
@@ -50,7 +55,8 @@ class MateriasController {
     public async eliminarMateria(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            await pool.query('DELETE FROM materias WHERE id = ?', [id]);
+            const { idUsuario } = req.body;
+            await pool.query('DELETE FROM materias WHERE id = ? AND idUsuario = ?', [id, idUsuario]);
             res.json({ "Éxito": "Materia eliminada exitosamente." });
         } catch (error) {
             res.json({ "Error": "Error al eliminar materia: " + error });

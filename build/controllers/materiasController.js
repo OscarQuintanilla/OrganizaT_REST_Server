@@ -16,7 +16,8 @@ class MateriasController {
     listarMaterias(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const resultado = yield database_1.default.query("SELECT * FROM materias WHERE idUsuario = 'MASTER'");
+                const { idUsuario } = req.body;
+                const resultado = yield database_1.default.query("SELECT * FROM materias WHERE idUsuario = ?", [idUsuario]);
                 res.json(resultado);
             }
             catch (error) {
@@ -27,10 +28,13 @@ class MateriasController {
     buscarMateriaPorId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(req.body);
+                const { idUsuario } = req.body[0];
                 const { id } = req.params;
-                const resultado = yield database_1.default.query('SELECT * FROM materias WHERE id = ?', [id]);
-                if (resultado[0].idUsuario != 'MASTER') {
-                    res.json({ "error": resultado });
+                const resultado = yield database_1.default.query('SELECT * FROM materias WHERE id = ? AND idUsuario = ?', [id, idUsuario]);
+                if (resultado[0].idUsuario != idUsuario) {
+                    resultado == null;
+                    res.json({ "error": "sin permiso" });
                 }
                 else {
                     res.json(resultado);
@@ -68,7 +72,8 @@ class MateriasController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                yield database_1.default.query('DELETE FROM materias WHERE id = ?', [id]);
+                const { idUsuario } = req.body;
+                yield database_1.default.query('DELETE FROM materias WHERE id = ? AND idUsuario = ?', [id, idUsuario]);
                 res.json({ "Éxito": "Materia eliminada exitosamente." });
             }
             catch (error) {
