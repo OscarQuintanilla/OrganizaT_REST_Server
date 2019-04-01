@@ -10,11 +10,11 @@ class GruposRoutes {
      }
 
     config():void {
-        this.router.get('/', gruposController.listarGrupos);
-        this.router.get('/:id', gruposController.obtenerGrupoPorId);
+        this.router.post('/lista', gruposController.listarGrupos);
+        this.router.post('/:id', gruposController.obtenerGrupoPorId);
         this.router.post('/', gruposController.crearGrupo);
         this.router.put('/:id',gruposController.modificarGrupo);
-        this.router.delete('/:id', gruposController.eliminiarGrupo);
+        this.router.post('/fin/:id', gruposController.eliminiarGrupo);
     }
 }
 const gruposRoutes = new GruposRoutes();

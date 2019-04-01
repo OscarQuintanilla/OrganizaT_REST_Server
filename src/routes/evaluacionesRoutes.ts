@@ -9,11 +9,11 @@ class EvaluacionesRoutes{
     }
 
     config(){
-        this.router.get('/', evaluacionesController.listarEvaluaciones);
-        this.router.get('/:id', evaluacionesController.obtenerEvaluacionPorId);
+        this.router.post('/lista', evaluacionesController.listarEvaluaciones);
+        this.router.post('/:id', evaluacionesController.obtenerEvaluacionPorId);
         this.router.post('/', evaluacionesController.crearEvaluacion);
         this.router.put('/:id', evaluacionesController.modificarEvaluacion);
-        this.router.delete('/:id', evaluacionesController.eliminarEvaluacion);
+        this.router.post('/fin/:id', evaluacionesController.eliminarEvaluacion);
     }
 
 }

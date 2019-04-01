@@ -16,7 +16,8 @@ class GruposController {
     listarGrupos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const respuesta = yield database_1.default.query('SELECT *  FROM gruposdetrabajo WHERE idUsuario = "MASTER"');
+                const { idUsuario } = req.body;
+                const respuesta = yield database_1.default.query('SELECT *  FROM gruposdetrabajo WHERE idUsuario = ?', [idUsuario]);
                 res.json(respuesta);
             }
             catch (error) {
@@ -28,7 +29,8 @@ class GruposController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const respuesta = yield database_1.default.query("SELECT * FROM gruposdetrabajo WHERE idUsuario = 'MASTER' AND id = ?", [id]);
+                const { idUsuario } = req.body;
+                const respuesta = yield database_1.default.query("SELECT * FROM gruposdetrabajo WHERE idUsuario = ? AND id = ?", [idUsuario, id]);
                 res.json(respuesta);
             }
             catch (error) {
@@ -63,7 +65,8 @@ class GruposController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const respuesta = yield database_1.default.query('DELETE FROM gruposdetrabajo WHERE id = ?', [id]);
+                const { idUsuario } = req.body;
+                const respuesta = yield database_1.default.query('DELETE FROM gruposdetrabajo WHERE id = ? AND idUsuario = ? ', [id, idUsuario]);
                 res.json({ "respuesta": "hecho" });
             }
             catch (error) {

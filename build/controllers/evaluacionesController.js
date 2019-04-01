@@ -16,7 +16,8 @@ class EvaluacionesController {
     listarEvaluaciones(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const resultado = yield database_1.default.query("SELECT * FROM evaluaciones WHERE idUsuario = 'MASTER' ORDER BY Fecha");
+                const { idUsuario } = req.body;
+                const resultado = yield database_1.default.query("SELECT * FROM evaluaciones WHERE idUsuario = ? ORDER BY Fecha", [idUsuario]);
                 res.json(resultado);
             }
             catch (error) {
@@ -29,7 +30,8 @@ class EvaluacionesController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const resultado = yield database_1.default.query("SELECT * FROM evaluaciones WHERE idUsuario = 'MASTER' AND  id = ? ", [id]);
+                const { idUsuario } = req.body;
+                const resultado = yield database_1.default.query("SELECT * FROM evaluaciones WHERE idUsuario = ? AND  id = ? ", [idUsuario, id]);
                 res.json(resultado);
             }
             catch (error) {
@@ -70,7 +72,8 @@ class EvaluacionesController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                const resultado = yield database_1.default.query("DELETE FROM evaluaciones WHERE id = ?", [id]);
+                const { idUsuario } = req.body;
+                const resultado = yield database_1.default.query("DELETE FROM evaluaciones WHERE id = ? idUsuario = ? ", [id, idUsuario]);
                 res.json({ "resultado": "exito" });
             }
             catch (error) {

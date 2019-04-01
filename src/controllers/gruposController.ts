@@ -6,7 +6,8 @@ export class GruposController {
 
     public async listarGrupos(req: Request, res: Response) {
         try {
-            const respuesta = await pool.query('SELECT *  FROM gruposdetrabajo WHERE idUsuario = "MASTER"');
+            const { idUsuario } = req.body;
+            const respuesta = await pool.query('SELECT *  FROM gruposdetrabajo WHERE idUsuario = ?', [idUsuario]);
             res.json(respuesta);
         } catch (error) {
             res.json(error);
@@ -16,7 +17,8 @@ export class GruposController {
     public async obtenerGrupoPorId(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            const respuesta = await pool.query("SELECT * FROM gruposdetrabajo WHERE idUsuario = 'MASTER' AND id = ?", [id])
+            const { idUsuario } = req.body;
+            const respuesta = await pool.query("SELECT * FROM gruposdetrabajo WHERE idUsuario = ? AND id = ?", [idUsuario, id])
             res.json(respuesta);
         } catch (error) {
             res.json(error);
@@ -45,7 +47,8 @@ export class GruposController {
     public async eliminiarGrupo(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            const respuesta = await pool.query('DELETE FROM gruposdetrabajo WHERE id = ?', [id]);
+            const { idUsuario} = req.body;
+            const respuesta = await pool.query('DELETE FROM gruposdetrabajo WHERE id = ? AND idUsuario = ? ', [id, idUsuario]);
             res.json({ "respuesta": "hecho" });
         } catch (error) {
             res.json(error);
