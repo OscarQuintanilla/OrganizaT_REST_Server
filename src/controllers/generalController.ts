@@ -6,6 +6,8 @@ class GeneralController {
         const { tipo } = req.params;
         var inicialesTipo: string = "";
         var result: [{ id: "" }];
+        var resultU: [{ idUsuario: "" }];
+
         var partesId: string[];
         let elemento: string = "";
         let ultimoId: string = "";
@@ -44,17 +46,35 @@ class GeneralController {
                     break;
             }
 
-            result = await pool.query(`SELECT id FROM ${elemento} ORDER BY id ASC`);
+            if (elemento == 'usuario') {
+                resultU = await pool.query(`SELECT idUsuario FROM ${elemento} ORDER BY idUsuario ASC`);
+                //Se recorre el registro para guardar la sección numerica del registro hasta llegar a la última
+                //También encuentra saltos en la continuidad
+                resultU.forEach(registro => {
+                    iteracion++;
+                    //Parte según la última letra del tipo de usuario
+                    partesId = registro.idUsuario.split(/[A V R S]/);
+                    let cantPartes = partesId.length;
+                    if (+partesId[cantPartes - 1] == iteracion) {
+                        ultimoId = partesId[cantPartes - 1];
+                    }
+                });
 
-            //Tambien encuentra saltos en la continuidad de tareas
-            result.forEach(registro => {
-                iteracion++;
-                partesId = registro.id.split(/[A V R S]/);
-                let cantPartes = partesId.length;
-                if (+partesId[cantPartes - 1] == iteracion) {
-                    ultimoId = partesId[cantPartes - 1];
-                }
-            });
+            } else {
+                result = await pool.query(`SELECT id FROM ${elemento} ORDER BY id ASC`);
+                result.forEach(registro => {
+                    if (registro.id == undefined) {
+                        registro.id = resultU[0].idUsuario;
+                    }
+                    iteracion++;
+                    //Parte según la última letra del tipo de usuario
+                    partesId = registro.id.split(/[A V R S]/);
+                    let cantPartes = partesId.length;
+                    if (+partesId[cantPartes - 1] == iteracion) {
+                        ultimoId = partesId[cantPartes - 1];
+                    }
+                });
+            }
 
             //Asigna el correlativo adicionando uno al último
             ultimoId = (+ultimoId + 1).toString();

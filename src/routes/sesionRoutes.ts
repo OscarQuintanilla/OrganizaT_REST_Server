@@ -12,7 +12,7 @@ class SesionRoutes{
         this.router.post('/', sesionController.verificarDatos);
         this.router.post('/registrar', sesionController.crearCuenta);
         this.router.put('/', sesionController.actualizarDatos);
-        this.router.delete('/:idUsuario', sesionController.borrarCuenta);
+        this.router.post('/:idUsuario', sesionController.borrarCuenta);
     }
 }
 

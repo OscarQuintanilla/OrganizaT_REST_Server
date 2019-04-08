@@ -14,7 +14,7 @@ class SesionRoutes {
         this.router.post('/', sesionController_1.default.verificarDatos);
         this.router.post('/registrar', sesionController_1.default.crearCuenta);
         this.router.put('/', sesionController_1.default.actualizarDatos);
-        this.router.delete('/:idUsuario', sesionController_1.default.borrarCuenta);
+        this.router.post('/:idUsuario', sesionController_1.default.borrarCuenta);
     }
 }
 const sesionRoutes = new SesionRoutes();

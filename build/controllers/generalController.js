@@ -18,6 +18,7 @@ class GeneralController {
             const { tipo } = req.params;
             var inicialesTipo = "";
             var result;
+            var resultU;
             var partesId;
             let elemento = "";
             let ultimoId = "";
@@ -49,16 +50,35 @@ class GeneralController {
                         console.log("Vulneración del sistema.");
                         break;
                 }
-                result = yield database_1.default.query(`SELECT id FROM ${elemento} ORDER BY id ASC`);
-                //Tambien encuentra saltos en la continuidad de tareas
-                result.forEach(registro => {
-                    iteracion++;
-                    partesId = registro.id.split(/[A V R S]/);
-                    let cantPartes = partesId.length;
-                    if (+partesId[cantPartes - 1] == iteracion) {
-                        ultimoId = partesId[cantPartes - 1];
-                    }
-                });
+                if (elemento == 'usuario') {
+                    resultU = yield database_1.default.query(`SELECT idUsuario FROM ${elemento} ORDER BY idUsuario ASC`);
+                    //Se recorre el registro para guardar la sección numerica del registro hasta llegar a la última
+                    //También encuentra saltos en la continuidad
+                    resultU.forEach(registro => {
+                        iteracion++;
+                        //Parte según la última letra del tipo de usuario
+                        partesId = registro.idUsuario.split(/[A V R S]/);
+                        let cantPartes = partesId.length;
+                        if (+partesId[cantPartes - 1] == iteracion) {
+                            ultimoId = partesId[cantPartes - 1];
+                        }
+                    });
+                }
+                else {
+                    result = yield database_1.default.query(`SELECT id FROM ${elemento} ORDER BY id ASC`);
+                    result.forEach(registro => {
+                        if (registro.id == undefined) {
+                            registro.id = resultU[0].idUsuario;
+                        }
+                        iteracion++;
+                        //Parte según la última letra del tipo de usuario
+                        partesId = registro.id.split(/[A V R S]/);
+                        let cantPartes = partesId.length;
+                        if (+partesId[cantPartes - 1] == iteracion) {
+                            ultimoId = partesId[cantPartes - 1];
+                        }
+                    });
+                }
                 //Asigna el correlativo adicionando uno al último
                 ultimoId = (+ultimoId + 1).toString();
                 //Asignación de ceros
