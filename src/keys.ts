@@ -1,9 +1,8 @@
 export default {
     database: {
-        host: 'localhost', 
-        user: 'root',
-        password: '',
+        host: '35.202.55.81', 
+        user: 'OrganizatClient',
+        password: 'datacloudt',
         database: 'organizat'
     }
-
 }

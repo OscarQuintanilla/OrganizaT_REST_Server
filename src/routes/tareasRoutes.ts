@@ -11,12 +11,11 @@ class TareasRoutes {
     config(): void{
         this.router.post('/lista/', tareasController.listarTareas );
         this.router.post('/:id', tareasController.buscarTarea);
-        this.router.post('/', tareasController.crearTarea );
+        this.router.post('/crear/crear', tareasController.crearTarea );
         this.router.put('/:id', tareasController.modificarTarea);
         this.router.post('/fin/:id', tareasController.eliminarTarea);
-        
     }
-
+    
 }
 
 const tareasRoutes  = new TareasRoutes();

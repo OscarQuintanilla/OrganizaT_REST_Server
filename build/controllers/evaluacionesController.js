@@ -73,7 +73,7 @@ class EvaluacionesController {
             try {
                 const { id } = req.params;
                 const { idUsuario } = req.body;
-                const resultado = yield database_1.default.query("DELETE FROM evaluaciones WHERE id = ? idUsuario = ? ", [id, idUsuario]);
+                const resultado = yield database_1.default.query("DELETE FROM evaluaciones WHERE id = ? AND idUsuario = ? ", [id, idUsuario]);
                 res.json({ "resultado": "exito" });
             }
             catch (error) {

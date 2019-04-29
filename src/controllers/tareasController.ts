@@ -34,21 +34,11 @@ class TareasController {
     }
 
     public async crearTarea(req: Request, res: Response) {
+        
         try {
-            //Crea el registro en la tabla tareas
-            console.log(req.body);
+            //Crea el registro en la tabla tareas   
             await pool.query('INSERT INTO tareas SET ?', [req.body]);
-
-            //Crea el registro en la tabla usuario_tareas
-            const { id } = req.body;
-            try {
-                await pool.query('INSERT INTO usuario_tareas VALUES ("ADMIN", "' + id + '")');
-            } catch (error) {
-                console.log("Error en la inserción en la tabla usuario?tareas.");
-                res.json({ message: error });
-                await pool.query('DELETE FROM tareas WHERE id = ?', id);
-            }
-
+            //await pool.query('SELECT * FROM tareas');
             res.json({ message: 'Insertado' });
             console.log("Tarea insertada.");
         } catch (error) {

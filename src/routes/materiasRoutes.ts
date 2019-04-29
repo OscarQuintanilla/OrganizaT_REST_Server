@@ -11,7 +11,7 @@ class MateriasRoutes{
     config():void{
         this.router.post('/lista', materiasController.listarMaterias);
         this.router.post('/:id', materiasController.buscarMateriaPorId);
-        this.router.post('/', materiasController.crearMateria);
+        this.router.post('/crear/crear', materiasController.crearMateria);
         this.router.put('/:id', materiasController.modificarMateria);
         this.router.post('/fin/:id', materiasController.eliminarMateria);
     }

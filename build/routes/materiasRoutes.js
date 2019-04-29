@@ -13,7 +13,7 @@ class MateriasRoutes {
     config() {
         this.router.post('/lista', materiasController_1.default.listarMaterias);
         this.router.post('/:id', materiasController_1.default.buscarMateriaPorId);
-        this.router.post('/', materiasController_1.default.crearMateria);
+        this.router.post('/crear/crear', materiasController_1.default.crearMateria);
         this.router.put('/:id', materiasController_1.default.modificarMateria);
         this.router.post('/fin/:id', materiasController_1.default.eliminarMateria);
     }

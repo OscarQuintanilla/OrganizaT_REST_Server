@@ -52,19 +52,9 @@ class TareasController {
     crearTarea(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                //Crea el registro en la tabla tareas
-                console.log(req.body);
+                //Crea el registro en la tabla tareas   
                 yield database_1.default.query('INSERT INTO tareas SET ?', [req.body]);
-                //Crea el registro en la tabla usuario_tareas
-                const { id } = req.body;
-                try {
-                    yield database_1.default.query('INSERT INTO usuario_tareas VALUES ("ADMIN", "' + id + '")');
-                }
-                catch (error) {
-                    console.log("Error en la inserción en la tabla usuario?tareas.");
-                    res.json({ message: error });
-                    yield database_1.default.query('DELETE FROM tareas WHERE id = ?', id);
-                }
+                //await pool.query('SELECT * FROM tareas');
                 res.json({ message: 'Insertado' });
                 console.log("Tarea insertada.");
             }

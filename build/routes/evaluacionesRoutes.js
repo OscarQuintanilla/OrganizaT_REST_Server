@@ -13,7 +13,7 @@ class EvaluacionesRoutes {
     config() {
         this.router.post('/lista', evaluacionesController_1.default.listarEvaluaciones);
         this.router.post('/:id', evaluacionesController_1.default.obtenerEvaluacionPorId);
-        this.router.post('/', evaluacionesController_1.default.crearEvaluacion);
+        this.router.post('/crear/crear', evaluacionesController_1.default.crearEvaluacion);
         this.router.put('/:id', evaluacionesController_1.default.modificarEvaluacion);
         this.router.post('/fin/:id', evaluacionesController_1.default.eliminarEvaluacion);
     }
